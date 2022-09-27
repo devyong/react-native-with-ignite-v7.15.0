@@ -1,12 +1,12 @@
 import { onSnapshot } from "mobx-state-tree"
-import { RootStoreModel, RootStore } from "./root-store"
+import { RootStoreModel, IRootStore } from "./root-store"
 import { Environment } from "../environment"
 import * as storage from "../../utils/storage"
 
 /**
  * The key we'll be saving our state as within async storage.
  */
-const ROOT_STATE_STORAGE_KEY = "root"
+const ROOT_STATE_STORAGE_KEY = "APP_ROOT_STATE"
 
 /**
  * Setup the environment that all the models will be sharing.
@@ -25,7 +25,7 @@ export async function createEnvironment() {
  * Setup the root state.
  */
 export async function setupRootStore() {
-  let rootStore: RootStore
+  let rootStore: IRootStore
   let data: any
 
   // prepare the environment that will be associated with the RootStore.
@@ -40,7 +40,9 @@ export async function setupRootStore() {
     rootStore = RootStoreModel.create({}, env)
 
     // but please inform us what happened
-    __DEV__ && console.tron.error(e.message, null)
+    if (__DEV__) {
+      console.tron.error(e.message, null)
+    }
   }
 
   // reactotron logging

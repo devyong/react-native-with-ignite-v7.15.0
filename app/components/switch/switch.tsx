@@ -1,7 +1,7 @@
 import React from "react"
 import { ViewStyle, Animated, Easing, TouchableWithoutFeedback } from "react-native"
 import { color } from "../../theme"
-import { SwitchProps } from "./switch.props"
+import { ISwitchProps } from "./switch.props"
 
 // dimensions
 const THUMB_SIZE = 30
@@ -47,7 +47,7 @@ const THUMB: ViewStyle = {
 
 const makeAnimatedValue = (switchOn) => new Animated.Value(switchOn ? 1 : 0)
 
-export function Switch(props: SwitchProps) {
+export function Switch(props: ISwitchProps) {
   const [timer] = React.useState<Animated.Value>(makeAnimatedValue(props.value))
   const startAnimation = React.useMemo(
     () => (newValue: boolean) => {

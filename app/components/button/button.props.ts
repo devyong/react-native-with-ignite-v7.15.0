@@ -2,7 +2,7 @@ import { StyleProp, TextStyle, TouchableOpacityProps, ViewStyle } from "react-na
 import { ButtonPresetNames } from "./button.presets"
 import { TxKeyPath } from "../../i18n"
 
-export interface ButtonProps extends TouchableOpacityProps {
+export interface IButtonProps extends TouchableOpacityProps {
   /**
    * Text which is looked up via i18n.
    */

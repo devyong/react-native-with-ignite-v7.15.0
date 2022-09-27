@@ -1,7 +1,7 @@
 import { StyleProp, ViewStyle, TextStyle } from "react-native"
 import { TxKeyPath } from "../../i18n"
 
-export interface CheckboxProps {
+export interface ICheckboxProps {
   /**
    * Additional container style. Useful for margins.
    */

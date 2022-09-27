@@ -16,7 +16,7 @@ import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-c
 import { initFonts } from "./theme/fonts" // expo
 import * as storage from "./utils/storage"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+import { IRootStore, RootStoreProvider, setupRootStore } from "./models"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 import { ErrorBoundary } from "./screens/error/error-boundary"
 
@@ -30,7 +30,7 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
  * This is the root component of our app.
  */
 function App() {
-  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
+  const [rootStore, setRootStore] = useState<IRootStore | undefined>(undefined)
   const {
     initialNavigationState,
     onNavigationStateChange,

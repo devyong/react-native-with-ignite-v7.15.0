@@ -1,10 +1,10 @@
 import { getRoot, IStateTreeNode } from "mobx-state-tree"
-import { RootStore, RootStoreModel } from "../root-store/root-store"
+import { IRootStore, RootStoreModel } from "../root-store/root-store"
 
 /**
  * Returns a RootStore object in strongly typed way
  * for stores to access other stores.
  */
-export const getRootStore = (self: IStateTreeNode): RootStore => {
+export const getRootStore = (self: IStateTreeNode): IRootStore => {
   return getRoot<typeof RootStoreModel>(self)
 }

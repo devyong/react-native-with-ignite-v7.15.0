@@ -1,6 +1,6 @@
 import React from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
-import { HeaderProps } from "./header.props"
+import { IHeaderProps } from "./header.props"
 import { Button } from "../button/button"
 import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
@@ -24,7 +24,7 @@ const RIGHT: ViewStyle = { width: 32 }
 /**
  * Header that appears on many screens. Will hold navigation buttons and screen title.
  */
-export function Header(props: HeaderProps) {
+export function Header(props: IHeaderProps) {
   const {
     onLeftPress,
     onRightPress,

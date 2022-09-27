@@ -57,7 +57,7 @@ const ICON: ImageStyle = {
   height: 64,
 }
 
-export interface ErrorComponentProps {
+export interface IErrorComponentProps {
   error: Error
   errorInfo: ErrorInfo
   onReset(): void
@@ -66,7 +66,7 @@ export interface ErrorComponentProps {
 /**
  * Describe your component here
  */
-export const ErrorComponent = (props: ErrorComponentProps) => {
+export const ErrorComponent = (props: IErrorComponentProps) => {
   return (
     <View style={CONTAINER}>
       <Icon style={ICON} icon="bug" />

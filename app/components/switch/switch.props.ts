@@ -1,6 +1,6 @@
 import { StyleProp, ViewStyle } from "react-native"
 
-export interface SwitchProps {
+export interface ISwitchProps {
   /**
    * On or off.
    */

@@ -1,12 +1,12 @@
 import React, { Component, ErrorInfo, ReactNode } from "react"
 import { ErrorComponent } from "./error-component"
 
-interface Props {
+interface IProps {
   children: ReactNode
   catchErrors: "always" | "dev" | "prod" | "never"
 }
 
-interface State {
+interface IState {
   error: Error | null
   errorInfo: ErrorInfo | null
 }
@@ -21,7 +21,7 @@ interface State {
  *
  * @link: https://reactjs.org/docs/error-boundaries.html
  */
-export class ErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<IProps, IState> {
   state = { error: null, errorInfo: null }
 
   // If an error in a child is encountered, this will run

@@ -1,9 +1,9 @@
 import { Tron } from "./tron"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
-import { RootStore } from "../../models/root-store/root-store"
+import { IRootStore } from "../../models/root-store/root-store"
 import { onSnapshot } from "mobx-state-tree"
-import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
+import { IReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"
 import { clear } from "../../utils/storage"
 import { goBack, resetRoot, navigate } from "../../navigators/navigation-utilities"
@@ -56,7 +56,7 @@ if (__DEV__) {
  * services.
  */
 export class Reactotron {
-  config: ReactotronConfig
+  config: IReactotronConfig
 
   rootStore: any
 
@@ -65,7 +65,7 @@ export class Reactotron {
    *
    * @param config the configuration
    */
-  constructor(config: ReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
+  constructor(config: IReactotronConfig = DEFAULT_REACTOTRON_CONFIG) {
     // merge the passed in config with some defaults
     this.config = {
       host: "localhost",
@@ -86,7 +86,7 @@ export class Reactotron {
    */
   setRootStore(rootStore: any, initialData: any) {
     if (__DEV__) {
-      rootStore = rootStore as RootStore // typescript hack
+      rootStore = rootStore as IRootStore // typescript hack
       this.rootStore = rootStore
 
       const { initial, snapshots } = this.config.state

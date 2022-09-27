@@ -3,7 +3,7 @@ import i18n from "i18n-js"
 import { TextPresets } from "./text.presets"
 import { TxKeyPath } from "../../i18n"
 
-export interface TextProps extends TextProperties {
+export interface ITextProps extends TextProperties {
   /**
    * Children components.
    */

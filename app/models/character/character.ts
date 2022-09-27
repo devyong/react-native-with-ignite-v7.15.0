@@ -10,7 +10,7 @@ export const CharacterModel = types.model("Character").props({
   image: types.maybe(types.string),
 })
 
-export interface Character extends Instance<typeof CharacterModel> {}
-export interface CharacterSnapshotOut extends SnapshotOut<typeof CharacterModel> {}
-export interface CharacterSnapshotIn extends SnapshotIn<typeof CharacterModel> {}
+export interface ICharacter extends Instance<typeof CharacterModel> {}
+export interface ICharacterSnapshotOut extends SnapshotOut<typeof CharacterModel> {}
+export interface ICharacterSnapshotIn extends SnapshotIn<typeof CharacterModel> {}
 export const createCharacterDefaultModel = () => types.optional(CharacterModel, {})

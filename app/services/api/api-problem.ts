@@ -1,6 +1,7 @@
 import { ApiResponse } from "apisauce"
+import { TApiErrorResponse, TApiResponse } from "./api-base"
 
-export type GeneralApiProblem =
+export type TGeneralApiProblem =
   /**
    * Times up.
    */
@@ -37,37 +38,74 @@ export type GeneralApiProblem =
    * The data we received is not in the expected format.
    */
   | { kind: "bad-data" }
+  /**
+   * API Server 구현 정책에따라 200으로 내려오면서 에러 데이터를 전달하는 경우.
+   */
+  | { kind: "common"; detail: TApiErrorResponse }
+  | { kind: "collect"; detail: TApiErrorResponse }
+  | { kind: "correct"; detail: TApiErrorResponse }
+  | { kind: "batch"; detail: TApiErrorResponse; temporary: true }
+  | { kind: "service"; detail: TApiErrorResponse; temporary: true }
 
 /**
  * Attempts to get a common cause of problems from an api response.
  *
+ * api response의 공통적인 문제 원인 추출을 시도한다.
+ *
  * @param response The api response.
  */
-export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProblem | void {
-  switch (response.problem) {
-    case "CONNECTION_ERROR":
-      return { kind: "cannot-connect", temporary: true }
-    case "NETWORK_ERROR":
-      return { kind: "cannot-connect", temporary: true }
-    case "TIMEOUT_ERROR":
-      return { kind: "timeout", temporary: true }
-    case "SERVER_ERROR":
-      return { kind: "server" }
-    case "UNKNOWN_ERROR":
-      return { kind: "unknown", temporary: true }
-    case "CLIENT_ERROR":
-      switch (response.status) {
-        case 401:
-          return { kind: "unauthorized" }
-        case 403:
-          return { kind: "forbidden" }
-        case 404:
-          return { kind: "not-found" }
-        default:
-          return { kind: "rejected" }
-      }
-    case "CANCEL_ERROR":
-      return null
+export function getGeneralApiProblem<T>(
+  response: ApiResponse<TApiResponse<T> | null>,
+): TGeneralApiProblem | null {
+  if (!response.ok) {
+    switch (response.problem) {
+      case "CONNECTION_ERROR":
+        return { kind: "cannot-connect", temporary: true }
+      case "NETWORK_ERROR":
+        return { kind: "cannot-connect", temporary: true }
+      case "TIMEOUT_ERROR":
+        return { kind: "timeout", temporary: true }
+      case "SERVER_ERROR":
+        return { kind: "server" }
+      case "UNKNOWN_ERROR":
+        return { kind: "unknown", temporary: true }
+      case "CLIENT_ERROR":
+        switch (response.status) {
+          case 401:
+            return { kind: "unauthorized" }
+          case 403:
+            return { kind: "forbidden" }
+          case 404:
+            return { kind: "not-found" }
+          default:
+            return { kind: "rejected" }
+        }
+      case "CANCEL_ERROR":
+        return null
+    }
+  }
+
+  // NOTE - api server에 따른 에러 처리를 추가할 수 있다.
+  // API Server에서 강제로 200으로 내려보내면서 오류를 내려보낼 때 처리
+  if (response.data.resultCode !== "S") {
+    switch (response.data.errorCode?.split("-")[1][0]) {
+      //  공통 :   0000번대 (Http 에러코드 포함)
+      case "0":
+        return { kind: "common", detail: response.data }
+      //  수집 :   1000번대
+      case "1":
+        return { kind: "collect", detail: response.data }
+      //  전처리 : 2000번대
+      case "2":
+        return { kind: "correct", detail: response.data }
+      //  배치 :   3000번대
+      case "3":
+        return { kind: "batch", detail: response.data, temporary: true  }
+      //  서비스 : 5000번대
+      case "5":
+        return { kind: "service", detail: response.data, temporary: true  }
+      // NOTE API 구현하면서 추가 가능 ...
+    }
   }
 
   return null

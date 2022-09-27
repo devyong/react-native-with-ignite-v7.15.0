@@ -2,7 +2,7 @@ import { StyleProp, TextStyle, ViewStyle } from "react-native"
 import { IconTypes } from "../icon/icons"
 import { TxKeyPath } from "../../i18n"
 
-export interface HeaderProps {
+export interface IHeaderProps {
   /**
    * Main header, e.g. POWERED BY IGNITE
    */

@@ -1,7 +1,7 @@
 import React from "react"
 import { AutoImage as Image } from "../auto-image/auto-image"
 import { presets } from "./wallpaper.presets"
-import { WallpaperProps } from "./wallpaper.props"
+import { IWallpaperProps } from "./wallpaper.props"
 
 const defaultImage = require("./bg.png")
 
@@ -10,7 +10,7 @@ const defaultImage = require("./bg.png")
  *
  * This component is a HOC over the built-in React Native one.
  */
-export function Wallpaper(props: WallpaperProps) {
+export function Wallpaper(props: IWallpaperProps) {
   // grab the props
   const { preset = "stretch", style: styleOverride, backgroundImage } = props
 

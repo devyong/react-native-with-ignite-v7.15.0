@@ -1,4 +1,4 @@
-export interface ReactotronConfig {
+export interface IReactotronConfig {
   /** The name of the app. */
   name?: string
   /** The host to connect to: default 'localhost'. */
@@ -19,7 +19,7 @@ export interface ReactotronConfig {
 /**
  * The default Reactotron configuration.
  */
-export const DEFAULT_REACTOTRON_CONFIG: ReactotronConfig = {
+export const DEFAULT_REACTOTRON_CONFIG: IReactotronConfig = {
   clearOnLoad: true,
   host: "localhost",
   useAsyncStorage: true,

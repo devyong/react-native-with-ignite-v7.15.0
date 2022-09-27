@@ -1,5 +1,12 @@
 import React from "react"
-import { StyleProp, TextInput, TextInputProps, TextStyle, View, ViewStyle } from "react-native"
+import {
+  StyleProp,
+  TextInput,
+  TextInputProps,
+  TextStyle as ITextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
 import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
@@ -10,7 +17,7 @@ const CONTAINER: ViewStyle = {
 }
 
 // the base styling for the TextInput
-const INPUT: TextStyle = {
+const INPUT: ITextStyle = {
   fontFamily: typography.primary,
   color: color.text,
   minHeight: 44,
@@ -23,7 +30,7 @@ const PRESETS: { [name: string]: ViewStyle } = {
   default: {},
 }
 
-export interface TextFieldProps extends TextInputProps {
+export interface ITextFieldProps extends TextInputProps {
   /**
    * The placeholder i18n key.
    */
@@ -52,7 +59,7 @@ export interface TextFieldProps extends TextInputProps {
   /**
    * Optional style overrides for the input.
    */
-  inputStyle?: StyleProp<TextStyle>
+  inputStyle?: StyleProp<ITextStyle>
 
   /**
    * Various look & feels.
@@ -65,7 +72,7 @@ export interface TextFieldProps extends TextInputProps {
 /**
  * A component which has a label and an input together.
  */
-export function TextField(props: TextFieldProps) {
+export function TextField(props: ITextFieldProps) {
   const {
     placeholderTx,
     placeholder,

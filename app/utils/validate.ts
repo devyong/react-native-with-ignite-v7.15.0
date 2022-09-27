@@ -41,7 +41,7 @@ Validate.validators.tripped = function custom(value, options, key, attributes) {
  * See https://validatejs.org/#validators for more examples.
  *
  */
-export interface ValidationRules {
+export interface IValidationRules {
   [key: string]: Record<string, unknown>
 }
 
@@ -59,7 +59,7 @@ export interface ValidationRules {
  * }
  * ```
  */
-export interface ValidationErrors {
+export interface IValidationErrors {
   [key: string]: string[]
 }
 
@@ -69,9 +69,12 @@ export interface ValidationErrors {
  * @param rules The rules to apply.
  * @param data The object to validate.
  */
-export function validate(rules: ValidationRules, data: Record<string, unknown>): ValidationErrors {
+export function validate(
+  rules: IValidationRules,
+  data: Record<string, unknown>,
+): IValidationErrors {
   if (typeof data !== "object") {
-    return {} as ValidationErrors
+    return {} as IValidationErrors
   }
   return Validate(data, rules, { fullMessages: false }) || {}
 }

@@ -163,6 +163,15 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             />
             <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
           </View>
+          <View>
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              tx="demoScreen.calendar"
+              onPress={() => navigation.navigate("calendar")}
+            />
+            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+          </View>
           <Button
             style={DEMO}
             textStyle={DEMO_TEXT}

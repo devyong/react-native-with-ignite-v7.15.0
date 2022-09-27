@@ -27,11 +27,11 @@ const BULLET_TEXT: TextStyle = {
   lineHeight: 22,
 }
 
-export interface BulletItemProps {
+export interface IBulletItemProps {
   text: string
 }
 
-export function BulletItem(props: BulletItemProps) {
+export function BulletItem(props: IBulletItemProps) {
   return (
     <View style={BULLET_ITEM}>
       <Icon icon="bullet" containerStyle={BULLET_CONTAINER} style={BULLET} />

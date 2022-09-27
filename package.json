@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator=\"iPhone 14 Pro Max\"",
     "android": "react-native run-android",
     "test:e2e": "detox test -c ios.sim.debug",
     "build:e2e": "detox build -c ios.sim.debug",
@@ -25,7 +25,8 @@
     "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "clean": "react-native-clean-project",
-    "clean-all": "npx react-native clean-project-auto"
+    "clean-all": "npx react-native clean-project-auto",
+    "gen": "npx ignite-cli generate"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.3",
@@ -43,6 +44,7 @@
     "mobx-state-tree": "5.1.5",
     "react": "17.0.2",
     "react-native": "0.68.2",
+    "react-native-calendars": "^1.1289.0",
     "react-native-gesture-handler": "2.4.2",
     "react-native-keychain": "8.0.0",
     "react-native-safe-area-context": "4.3.1",
@@ -192,6 +194,7 @@
       "@typescript-eslint/no-empty-interface": 0,
       "@typescript-eslint/no-explicit-any": 0,
       "@typescript-eslint/no-object-literal-type-assertion": 0,
+      "@typescript-eslint/no-non-null-assertion": 0,
       "@typescript-eslint/no-var-requires": 0,
       "comma-dangle": 0,
       "multiline-ternary": 0,
