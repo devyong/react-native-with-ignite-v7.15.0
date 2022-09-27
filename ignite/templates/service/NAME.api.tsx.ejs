@@ -1,0 +1,29 @@
+import { ApiBase } from "./api/api-base"
+
+import { I<%= props.pascalCaseName %>Model } from "../models/<%= props.pascalCaseName %>.model"
+
+export class <%= props.pascalCaseName %>Api extends ApiBase {
+  async list<%= props.pascalCaseName %>() {
+    return this.list<I<%= props.pascalCaseName %>Model>("<%= props.camelCaseName %>")
+  }
+
+  async get<%= props.pascalCaseName %>(id: number) {
+    return this.get<I<%= props.pascalCaseName %>Model>(`<%= props.camelCaseName %>/${id}`)
+  }
+
+  async post<%= props.pascalCaseName %>(data: I<%= props.pascalCaseName %>Model) {
+    return this.post<I<%= props.pascalCaseName %>Model>(`<%= props.camelCaseName %>`, data)
+  }
+
+  async put<%= props.pascalCaseName %>(id: number, data: I<%= props.pascalCaseName %>Model) {
+    return this.put<I<%= props.pascalCaseName %>Model>(`<%= props.camelCaseName %>/${id}`, data)
+  }
+
+  async patch<%= props.pascalCaseName %>(id: number, data: I<%= props.pascalCaseName %>Model) {
+    return this.patch<I<%= props.pascalCaseName %>Model>(`<%= props.camelCaseName %>/${id}`, data)
+  }
+
+  async delete<%= props.pascalCaseName %>(id: number) {
+    return this.delete(`<%= props.camelCaseName %>/${id}`)
+  }
+}

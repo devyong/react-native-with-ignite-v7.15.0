@@ -1,0 +1,151 @@
+import { destroy, Instance, SnapshotIn, SnapshotOut, types, flow } from "mobx-state-tree"
+
+import { withEnvironment } from "./extensions/with-environment"
+import { I<%= props.pascalCaseName %>Model, <%= props.pascalCaseName %>Model } from "../models/<%= props.pascalCaseName %>.model"
+import { <%= props.pascalCaseName %>Api } from "../services/<%= props.pascalCaseName %>.api"
+
+/**
+ * Model description here for TypeScript hints.
+ */
+export const <%= props.pascalCaseName %>Store = types
+  .model("<%= props.pascalCaseName %>")
+  .props({
+    items: types.array(<%= props.pascalCaseName %>Model),
+    current: types.maybeNull(types.reference(<%= props.pascalCaseName %>Model)),
+    isLoading: true,
+    state: types.optional(types.enumeration("State", ["pending", "done", "error"]), "pending"),
+  })
+  .extend(withEnvironment)
+  .views((self) => ({
+    get list() {
+      return self.isLoading ? self.items : []
+    },
+
+    findById: function (id) {
+      return self.items.find((item) => item.id === id)
+    }
+  }))
+  .actions((self) => {
+    function setItems(items: I<%= props.pascalCaseName %>Model[]) {
+      self.items.replace(items)
+    }
+
+    function addItem(item: I<%= props.pascalCaseName %>Model) {
+      self.items.push(item)
+    }
+
+    function setItem(item: I<%= props.pascalCaseName %>Model) {
+      const existingItem = self.findById(item.id)
+      if (existingItem) {
+        existingItem.setProps(item)
+      }
+    }
+
+    function removeItem(item: I<%= props.pascalCaseName %>Model | number) {
+      const id = typeof item === "number" ? item : item.id
+      const existingItem = self.findById(id)
+      if (existingItem) {
+        destroy(existingItem)
+      }
+    }
+
+    function setCurrent(id: number | null) {
+      self.current = id === null ? null : self.findById(id)
+    }
+    
+    function markLoading(loading: boolean) {
+      self.isLoading = loading
+    }
+
+    function setState(state: "pending" | "done" | "error") {
+      self.state = state
+    }
+
+    return {
+      select: setCurrent,
+
+      list<%= props.pascalCaseName %>: flow(function* () {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.list<%= props.pascalCaseName %>()
+        if (result.kind === "ok") {
+          setState("done")
+          setItems(result.data)
+          markLoading(false)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+
+      get<%= props.pascalCaseName %>: flow(function* (id: number) {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.get<%= props.pascalCaseName %>(id)
+        if (result.kind === "ok") {
+          setState("done")
+          setItem(result.data)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+      
+      post<%= props.pascalCaseName %>: flow(function* (data: I<%= props.pascalCaseName %>Model) {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.post<%= props.pascalCaseName %>(data)
+        if (result.kind === "ok") {
+          setState("done")
+          addItem(result.data)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+      
+      put<%= props.pascalCaseName %>: flow(function* (id: number, data: I<%= props.pascalCaseName %>Model) {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.put<%= props.pascalCaseName %>(id, data)
+        if (result.kind === "ok") {
+          setState("done")
+          setItem(result.data)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+      
+      patch<%= props.pascalCaseName %>: flow(function* (id: number, data: I<%= props.pascalCaseName %>Model) {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.patch<%= props.pascalCaseName %>(id, data)
+        if (result.kind === "ok") {
+          setState("done")
+          setItem(result.data)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+      
+      delete<%= props.pascalCaseName %>: flow(function* (id: number) {
+        setState("pending")
+        const api = new <%= props.pascalCaseName %>Api(self.environment.api)
+        const result = yield api.delete<%= props.pascalCaseName %>(id)
+        if (result.kind === "ok") {
+          setState("done")
+          removeItem(id)
+        } else {
+          setState("error")
+          console.tron.log(result.kind)
+        }
+      }),
+    }
+  })
+
+export interface I<%= props.pascalCaseName %>ModelStore extends Instance<typeof <%= props.pascalCaseName %>Store> {}
+export interface I<%= props.pascalCaseName %>ModelStoreSnapshotOut extends SnapshotOut<typeof <%= props.pascalCaseName %>Store> {}
+export interface I<%= props.pascalCaseName %>ModelStoreSnapshotIn extends SnapshotIn<typeof <%= props.pascalCaseName %>Store> {}
+export const create<%= props.pascalCaseName %>StoreDefaultStore = () => types.optional(<%= props.pascalCaseName %>Store, {})

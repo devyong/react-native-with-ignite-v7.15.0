@@ -1,4 +1,4 @@
-import { CharacterModel } from "./character"
+import { CharacterModel } from "./character.model"
 
 test("can be created", () => {
   const instance = CharacterModel.create({

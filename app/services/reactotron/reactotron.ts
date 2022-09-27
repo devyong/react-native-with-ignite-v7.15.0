@@ -1,7 +1,7 @@
 import { Tron } from "./tron"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { ArgType } from "reactotron-core-client"
-import { IRootStore } from "../../models/root-store/root-store"
+import { IRootStore } from "../../stores/root-store/root-store"
 import { onSnapshot } from "mobx-state-tree"
 import { IReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotron-config"
 import { mst } from "reactotron-mst"

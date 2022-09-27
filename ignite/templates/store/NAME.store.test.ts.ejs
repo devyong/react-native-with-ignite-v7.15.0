@@ -1,0 +1,7 @@
+import { <%= props.pascalCaseName %>Store } from "./<%= props.pascalCaseName %>.store"
+
+test("can be created", () => {
+  const instance = <%= props.pascalCaseName %>Store.create({})
+
+  expect(instance).toBeTruthy()
+})

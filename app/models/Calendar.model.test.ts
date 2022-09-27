@@ -1,4 +1,4 @@
-import { CalendarModel } from "./calendar.model"
+import { CalendarModel } from "./Calendar.model"
 
 test("can be created", () => {
   const instance = CalendarModel.create({})
