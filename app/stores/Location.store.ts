@@ -1,8 +1,15 @@
-import { destroy, Instance, SnapshotIn, SnapshotOut, types, flow } from "mobx-state-tree"
+import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
-import { withEnvironment } from "./extensions/with-environment"
-import { ILocationModel, LocationModel } from "../models/Location.model"
-import { LocationApi } from "../services/Location.api"
+import { withEnvironment } from "./extensions"
+
+import { 
+  ILocationModel, 
+  LocationModel,
+  IPaginationModel, 
+  PaginationModel 
+} from "../models"
+
+import { LocationApi } from "../services"
 
 /**
  * Model description here for TypeScript hints.
@@ -11,16 +18,12 @@ export const LocationStore = types
   .model("Location")
   .props({
     items: types.array(LocationModel),
+    info: types.maybeNull(PaginationModel),
     current: types.maybeNull(types.reference(LocationModel)),
-    isLoading: true,
     state: types.optional(types.enumeration("State", ["pending", "done", "error"]), "pending"),
   })
   .extend(withEnvironment)
   .views((self) => ({
-    get list() {
-      return self.isLoading ? self.items : []
-    },
-
     findById: function (id) {
       return self.items.find((item) => item.id === id)
     }
@@ -52,9 +55,9 @@ export const LocationStore = types
     function setCurrent(id: number | null) {
       self.current = id === null ? null : self.findById(id)
     }
-    
-    function markLoading(loading: boolean) {
-      self.isLoading = loading
+
+    function setInfo(info: IPaginationModel) {
+      self.info ? self.info.setProps(info) : (self.info = info)
     }
 
     function setState(state: "pending" | "done" | "error") {
@@ -64,14 +67,14 @@ export const LocationStore = types
     return {
       select: setCurrent,
 
-      listLocation: flow(function* () {
+      listLocation: flow(function* (params?:{[key:string]:any}) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
-        const result = yield api.listLocation()
+        const result = yield api.listLocation(params)
         if (result.kind === "ok") {
-          setState("done")
           setItems(result.data)
-          markLoading(false)
+          setInfo(result.info)
+          setState("done")
         } else {
           setState("error")
           console.tron.log(result.kind)
@@ -142,10 +145,42 @@ export const LocationStore = types
           console.tron.log(result.kind)
         }
       }),
+
+      prev: flow(function* () {
+        if (self.info?.prev) {
+          setState("pending")
+          const api = new LocationApi(self.environment.api)
+          const result = yield api.listLocation(self.info.prev)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
+      
+      next: flow(function* () {
+        if (self.info?.next) {
+          setState("pending")
+          const api = new LocationApi(self.environment.api)
+          const result = yield api.listLocation(self.info.next)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
     }
   })
 
 export interface ILocationModelStore extends Instance<typeof LocationStore> {}
 export interface ILocationModelStoreSnapshotOut extends SnapshotOut<typeof LocationStore> {}
 export interface ILocationModelStoreSnapshotIn extends SnapshotIn<typeof LocationStore> {}
-export const createLocationStoreDefaultStore = () => types.optional(LocationStore, {})
+export const createLocationStore = () => types.optional(LocationStore, {})

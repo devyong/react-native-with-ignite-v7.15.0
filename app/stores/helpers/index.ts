@@ -1,1 +1,1 @@
-export * from './get-root-store';
+export * from "./get-root-store"

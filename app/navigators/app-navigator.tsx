@@ -10,6 +10,9 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { WelcomeScreen, DemoScreen, DemoListScreen, CalendarScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
+import { EpisodeScreen } from "../screens/Episode.screen"
+import { LocationScreen } from "../screens/Location.screen"
+import { CharacterDetailScreen } from "../screens/CharacterDetail.screen"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,8 +30,13 @@ export type NavigatorParamList = {
   welcome: undefined
   demo: undefined
   demoList: undefined
-  // 🔥 Your screens go here
+  location: undefined
+  episode: undefined
   calendar: undefined
+  // 🔥 Your screens go here
+  characterDetail: undefined
+  episodeDetail: undefined
+  locationDetail: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -45,8 +53,14 @@ const AppStack = () => {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
-      <Stack.Screen name="calendar" component={CalendarScreen} />
       {/** 🔥 Your screens go here */}
+      <Stack.Screen name="location" component={LocationScreen} />
+      <Stack.Screen name="episode" component={EpisodeScreen} />
+      <Stack.Screen name="calendar" component={CalendarScreen} />
+      <Stack.Screen name="characterDetail" component={CharacterDetailScreen} />
+
+      <Stack.Screen name="episodeDetail" component={CharacterDetailScreen} />
+      <Stack.Screen name="locationDetail" component={CharacterDetailScreen} />
     </Stack.Navigator>
   )
 }

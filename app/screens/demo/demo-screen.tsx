@@ -161,7 +161,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
               tx="demoScreen.reactotron"
               onPress={demoReactotron}
             />
-            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint`} />
           </View>
           <View>
             <Button
@@ -170,14 +170,29 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
               tx="demoScreen.calendar"
               onPress={() => navigation.navigate("calendar")}
             />
-            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+            <Text style={HINT} tx={`demoScreen.calendar`} />
           </View>
-          <Button
-            style={DEMO}
-            textStyle={DEMO_TEXT}
-            tx="demoScreen.demoList"
-            onPress={() => navigation.navigate("demoList")}
-          />
+          <View>
+            <Text style={HINT} tx={`demoScreen.rickAndMorty`} />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              tx="demoScreen.characterList"
+              onPress={() => navigation.navigate("demoList")}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              tx="demoScreen.episodeList"
+              onPress={() => navigation.navigate("episode")}
+            />
+            <Button
+              style={DEMO}
+              textStyle={DEMO_TEXT}
+              tx="demoScreen.locationList"
+              onPress={() => navigation.navigate("location")}
+            />
+          </View>
           <Image source={logoIgnite} style={IGNITE} />
           <View style={LOVE_WRAPPER}>
             <Text style={LOVE} text="Made with" />

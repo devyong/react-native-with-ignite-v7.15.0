@@ -3,8 +3,11 @@ import { ApiBase } from "./api/api-base"
 import { ILocationModel } from "../models/Location.model"
 
 export class LocationApi extends ApiBase {
-  async listLocation() {
-    return this.list<ILocationModel>("location")
+  async listLocation(params?: string | { [key: string]: any }) {
+    if (typeof params === "string") {
+      return this.list<ILocationModel>(params)
+    }
+    return this.list<ILocationModel>("location", params)
   }
 
   async getLocation(id: number) {

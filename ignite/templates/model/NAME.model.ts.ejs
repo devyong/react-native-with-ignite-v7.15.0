@@ -1,4 +1,11 @@
-import { applySnapshot, getSnapshot, Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
+import { 
+  applySnapshot, 
+  getSnapshot, 
+  Instance, 
+  SnapshotIn, 
+  SnapshotOut, 
+  types 
+} from "mobx-state-tree"
 
 /**
  * Model description here for TypeScript hints.
@@ -20,4 +27,4 @@ export const <%= props.pascalCaseName %>Model = types
 export interface I<%= props.pascalCaseName %>Model extends Instance<typeof <%= props.pascalCaseName %>Model> {}
 export interface I<%= props.pascalCaseName %>ModelSnapshotOut extends SnapshotOut<typeof <%= props.pascalCaseName %>Model> {}
 export interface I<%= props.pascalCaseName %>ModelSnapshotIn extends SnapshotIn<typeof <%= props.pascalCaseName %>Model> {}
-export const create<%= props.pascalCaseName %>ModelDefaultModel = () => types.optional(<%= props.pascalCaseName %>Model, {})
+export const create<%= props.pascalCaseName %>Model = () => types.optional(<%= props.pascalCaseName %>Model, {})

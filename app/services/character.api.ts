@@ -1,11 +1,13 @@
-import { ICharacterModel } from './../models/character.model';
-
-
 import { ApiBase } from "./api/api-base"
 
+import { ICharacterModel } from "./../models/character.model"
+
 export class CharacterApi extends ApiBase {
-  async listCharacter() {
-    return this.list<ICharacterModel>("character")
+  async listCharacter(params?: string | { [key: string]: any }) {
+    if (typeof params === "string") {
+      return this.list<ICharacterModel>(params)
+    }
+    return this.list<ICharacterModel>("character", params)
   }
 
   async getCharacter(id: number) {

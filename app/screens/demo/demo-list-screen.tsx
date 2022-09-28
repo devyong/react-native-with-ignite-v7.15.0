@@ -1,11 +1,18 @@
-import React, { useEffect, FC } from "react"
-import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
-import { Header, Screen, Text, AutoImage as Image, GradientBackground } from "../../components"
-import { color, spacing } from "../../theme"
-import { useStores } from "../../stores"
+import React, { FC, useCallback, useLayoutEffect, useMemo } from "react"
+import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import {
+  AutoImage as Image,
+  Button,
+  GradientBackground,
+  Header,
+  Screen,
+  Text,
+} from "../../components"
 import { NavigatorParamList } from "../../navigators"
+import { useStores } from "../../stores"
+import { color, spacing } from "../../theme"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -44,16 +51,36 @@ const FLAT_LIST: ViewStyle = {
 
 export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">> = observer(
   ({ navigation }) => {
-    const goBack = () => navigation.goBack()
-
     const { characterStore } = useStores()
-    const { items: characters } = characterStore
 
-    useEffect(() => {
-      async function fetchData() {
-        await characterStore.getCharacters()
-      }
+    const onSelect = useCallback((item) => {
+      // @ts-ignore
+      navigation.navigate("characterDetail", { id: item.id })
+    }, [])
 
+    const [goBack, fetchData, renderItem] = useMemo(
+      () => [
+        function goBack() {
+          navigation.goBack()
+        },
+        async function fetchData() {
+          await characterStore.listCharacter()
+        },
+        function RenderItem({ item }) {
+          return (
+            <View style={LIST_CONTAINER}>
+              <Image source={{ uri: item.image }} style={IMAGE} />
+              <Text style={LIST_TEXT} onPress={() => onSelect(item)}>
+                {item.name} ({item.status})
+              </Text>
+            </View>
+          )
+        },
+      ],
+      [],
+    )
+
+    useLayoutEffect(() => {
       fetchData()
     }, [])
 
@@ -68,19 +95,28 @@ export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <FlatList
-            contentContainerStyle={FLAT_LIST}
-            data={[...characters]}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <View style={LIST_CONTAINER}>
-                <Image source={{ uri: item.image }} style={IMAGE} />
-                <Text style={LIST_TEXT}>
-                  {item.name} ({item.status})
-                </Text>
-              </View>
-            )}
-          />
+          <View style={LIST_CONTAINER}>
+            <Button
+              text="Prev"
+              disabled={characterStore.info.prev === null}
+              onPress={characterStore.prev}
+            />
+            <Button
+              text="Next"
+              disabled={characterStore.info.next === null}
+              onPress={characterStore.next}
+            />
+          </View>
+          {characterStore.state === "error" && <Text>Error...</Text>}
+          {characterStore.state === "pending" && <Text>Loading...</Text>}
+          {characterStore.state === "done" && (
+            <FlatList
+              contentContainerStyle={FLAT_LIST}
+              data={[...characterStore.items]}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={renderItem}
+            />
+          )}
         </Screen>
       </View>
     )

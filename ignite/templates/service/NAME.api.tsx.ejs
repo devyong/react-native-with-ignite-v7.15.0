@@ -3,8 +3,11 @@ import { ApiBase } from "./api/api-base"
 import { I<%= props.pascalCaseName %>Model } from "../models/<%= props.pascalCaseName %>.model"
 
 export class <%= props.pascalCaseName %>Api extends ApiBase {
-  async list<%= props.pascalCaseName %>() {
-    return this.list<I<%= props.pascalCaseName %>Model>("<%= props.camelCaseName %>")
+  async list<%= props.pascalCaseName %>(params?: string | { [key: string]: any }) {
+    if (typeof params === "string") {
+      return this.list<I<%= props.pascalCaseName %>Model>(params)
+    }
+    return this.list<I<%= props.pascalCaseName %>Model>("<%= props.camelCaseName %>", params)
   }
 
   async get<%= props.pascalCaseName %>(id: number) {

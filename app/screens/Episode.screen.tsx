@@ -1,11 +1,11 @@
-import React, { FC, useCallback, useEffect } from "react"
-import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
-import { Header, Screen, Text, AutoImage as Image, GradientBackground } from "../components"
-import { color, spacing } from "../theme"
-import { useStores } from "../stores"
+import React, { FC, useCallback, useEffect } from "react"
+import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { Button, GradientBackground, Header, Screen, Text } from "../components"
 import { NavigatorParamList } from "../navigators"
+import { useStores } from "../stores"
+import { color, spacing } from "../theme"
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -42,23 +42,13 @@ const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-
-// STOP! READ ME FIRST!
-// To fix the TS error below, you'll need to add the following things in your navigation config:
-// - Add `<%= props.camelCaseName %>: undefined` to NavigatorParamList
-// - Import your screen, and add it to the stack:
-//     `<Stack.Screen name="<%= props.camelCaseName %>" component={<%= props.pascalCaseName%>Screen} />`
-// Hint: Look for the 🔥!
-
-// REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
-// @ts-ignore
-export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<NavigatorParamList, "<%= props.camelCaseName %>">> = observer(
-  function <%= props.pascalCaseName %>Screen({ navigation }) {
+export const EpisodeScreen: FC<StackScreenProps<NavigatorParamList, "episode">> = observer(
+  function EpisodeScreen({ navigation, route }) {
     // Pull in one of our MST stores
-    const { <%= props.camelCaseName %>Store } = useStores()
-    
+    const { episodeStore } = useStores()
+
     const fetchData = useCallback(async () => {
-      await <%= props.camelCaseName %>Store.list<%= props.pascalCaseName %>()
+      await episodeStore.listEpisode()
     }, [])
 
     const renderItem = useCallback(
@@ -75,22 +65,38 @@ export const <%= props.pascalCaseName %>Screen: FC<StackScreenProps<NavigatorPar
     }, [fetchData])
 
     return (
-      <View testID="<%= props.pascalCaseName %>Screen" style={FULL}>
+      <View testID="EpisodeScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
-            headerTx="<%= props.camelCaseName %>Screen.title"
+            headerTx="episodeScreen.title"
             leftIcon="back"
             onLeftPress={navigation.goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <FlatList
-            contentContainerStyle={FLAT_LIST}
-            data={[...<%= props.camelCaseName %>Store.items]}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={renderItem}
-          />
+          <View>
+            <Button
+              text="Prev"
+              disabled={episodeStore.info?.prev === null}
+              onPress={episodeStore.prev}
+            />
+            <Button
+              text="Next"
+              disabled={episodeStore.info?.next === null}
+              onPress={episodeStore.next}
+            />
+          </View>
+          {episodeStore.state === "error" && <Text>Error...</Text>}
+          {episodeStore.state === "pending" && <Text>Loading...</Text>}
+          {episodeStore.state === "done" && (
+            <FlatList
+              contentContainerStyle={FLAT_LIST}
+              data={[...episodeStore.items]}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={renderItem}
+            />
+          )}
         </Screen>
       </View>
     )

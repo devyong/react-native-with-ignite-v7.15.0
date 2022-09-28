@@ -1,8 +1,15 @@
-import { destroy, Instance, SnapshotIn, SnapshotOut, types, flow } from "mobx-state-tree"
+import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
-import { withEnvironment } from "./extensions/with-environment"
-import { IEpisodeModel, EpisodeModel } from "../models/Episode.model"
-import { EpisodeApi } from "../services/Episode.api"
+import { withEnvironment } from "./extensions"
+
+import { 
+  IEpisodeModel, 
+  EpisodeModel,
+  IPaginationModel, 
+  PaginationModel 
+} from "../models"
+
+import { EpisodeApi } from "../services"
 
 /**
  * Model description here for TypeScript hints.
@@ -11,16 +18,12 @@ export const EpisodeStore = types
   .model("Episode")
   .props({
     items: types.array(EpisodeModel),
+    info: types.maybeNull(PaginationModel),
     current: types.maybeNull(types.reference(EpisodeModel)),
-    isLoading: true,
     state: types.optional(types.enumeration("State", ["pending", "done", "error"]), "pending"),
   })
   .extend(withEnvironment)
   .views((self) => ({
-    get list() {
-      return self.isLoading ? self.items : []
-    },
-
     findById: function (id) {
       return self.items.find((item) => item.id === id)
     }
@@ -52,9 +55,9 @@ export const EpisodeStore = types
     function setCurrent(id: number | null) {
       self.current = id === null ? null : self.findById(id)
     }
-    
-    function markLoading(loading: boolean) {
-      self.isLoading = loading
+
+    function setInfo(info: IPaginationModel) {
+      self.info ? self.info.setProps(info) : (self.info = info)
     }
 
     function setState(state: "pending" | "done" | "error") {
@@ -64,14 +67,14 @@ export const EpisodeStore = types
     return {
       select: setCurrent,
 
-      listEpisode: flow(function* () {
+      listEpisode: flow(function* (params?:{[key:string]:any}) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
-        const result = yield api.listEpisode()
+        const result = yield api.listEpisode(params)
         if (result.kind === "ok") {
-          setState("done")
           setItems(result.data)
-          markLoading(false)
+          setInfo(result.info)
+          setState("done")
         } else {
           setState("error")
           console.tron.log(result.kind)
@@ -142,10 +145,42 @@ export const EpisodeStore = types
           console.tron.log(result.kind)
         }
       }),
+
+      prev: flow(function* () {
+        if (self.info?.prev) {
+          setState("pending")
+          const api = new EpisodeApi(self.environment.api)
+          const result = yield api.listEpisode(self.info.prev)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
+      
+      next: flow(function* () {
+        if (self.info?.next) {
+          setState("pending")
+          const api = new EpisodeApi(self.environment.api)
+          const result = yield api.listEpisode(self.info.next)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
     }
   })
 
 export interface IEpisodeModelStore extends Instance<typeof EpisodeStore> {}
 export interface IEpisodeModelStoreSnapshotOut extends SnapshotOut<typeof EpisodeStore> {}
 export interface IEpisodeModelStoreSnapshotIn extends SnapshotIn<typeof EpisodeStore> {}
-export const createEpisodeStoreDefaultStore = () => types.optional(EpisodeStore, {})
+export const createEpisodeStore = () => types.optional(EpisodeStore, {})

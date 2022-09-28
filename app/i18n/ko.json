@@ -1,24 +1,27 @@
 {
   "common": {
     "ok": "OK!",
-    "cancel": "취소",
+    "cancel": "Cancel",
     "back": "뒤로"
   },
   "errors": {
-    "invalidEmail": "이메일 주소가 올바르지 않습니다."
+    "invalidEmail": "잘못된 이메일 주소입니다."
   },
   "welcomeScreen": {
     "poweredBy": "IGNITE 제공",
-    "readyForLaunch": "실행준비 완료되었습니다.",
+    "readyForLaunch": "시작 준비 완료",
     "continue": "계속"
   },
   "demoScreen": {
     "howTo": "방법",
     "title": "이 스택에는 무엇이 있습니까?",
     "tagLine": "축하합니다. 고급 React Native 앱 템플릿을 이용하셨습니다. 이 보일러 플레이트를 이용하세요!",
-    "reactotron": "데모 리액토트론",
-    "calendar": "데모 캘린더",
-    "demoList": "데모 목록",
+    "reactotron": "리액토트론 예제",
+    "calendar": "캘린더 예제",
+    "characterList": "캐릭터",
+    "locationList": "로케이션",
+    "episodeList": "에피소드",
+    "rickAndMorty": "리크앤모티 데모",
     "androidReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 단말기에서 adb reverse tcp:9090 tcp:9090을 실행하고 앱을 다시 로드합니다.",
     "iosReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 앱을 다시 로드합니다.",
     "macosReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 앱을 다시 로드합니다.",
@@ -26,7 +29,25 @@
     "windowsReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 앱을 다시 로드합니다."
   },
   "demoListScreen": {
-    "title": "데모 목록"
+    "title": "캐릭터 목록"
+  },
+  "locationScreen": {
+    "title": "로케이션 목록"
+  },
+  "episodeScreen": {
+    "title": "에피소드 목록"
+  },
+  "calendarScreen": {
+    "title": "캘린더 예제"
+  },
+  "characterDetailScreen": {
+    "title": "캐릭터 상세 정보"
+  },
+  "episodeDetailScreen": {
+    "title": "에피소드 상세 정보"
+  },
+  "locationDetailScreen": {
+    "title": "로케이션 상세 정보"
   },
   "errorScreen": {
     "title": "뭔가 잘못됐어!",

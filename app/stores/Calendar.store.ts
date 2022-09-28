@@ -1,8 +1,15 @@
-import { destroy, Instance, SnapshotIn, SnapshotOut, types, flow } from "mobx-state-tree"
+import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 
-import { withEnvironment } from "./extensions/with-environment"
-import { ICalendarModel, CalendarModel } from "../models/Calendar.model"
-import { CalendarApi } from "../services/Calendar.api"
+import { withEnvironment } from "./extensions"
+
+import { 
+  ICalendarModel, 
+  CalendarModel,
+  IPaginationModel, 
+  PaginationModel 
+} from "../models"
+
+import { CalendarApi } from "../services"
 
 /**
  * Model description here for TypeScript hints.
@@ -11,16 +18,12 @@ export const CalendarStore = types
   .model("Calendar")
   .props({
     items: types.array(CalendarModel),
+    info: types.maybeNull(PaginationModel),
     current: types.maybeNull(types.reference(CalendarModel)),
-    isLoading: true,
     state: types.optional(types.enumeration("State", ["pending", "done", "error"]), "pending"),
   })
   .extend(withEnvironment)
   .views((self) => ({
-    get list() {
-      return self.isLoading ? self.items : []
-    },
-
     findById: function (id) {
       return self.items.find((item) => item.id === id)
     }
@@ -52,9 +55,9 @@ export const CalendarStore = types
     function setCurrent(id: number | null) {
       self.current = id === null ? null : self.findById(id)
     }
-    
-    function markLoading(loading: boolean) {
-      self.isLoading = loading
+
+    function setInfo(info: IPaginationModel) {
+      self.info ? self.info.setProps(info) : (self.info = info)
     }
 
     function setState(state: "pending" | "done" | "error") {
@@ -64,14 +67,14 @@ export const CalendarStore = types
     return {
       select: setCurrent,
 
-      listCalendar: flow(function* () {
+      listCalendar: flow(function* (params?:{[key:string]:any}) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
-        const result = yield api.listCalendar()
+        const result = yield api.listCalendar(params)
         if (result.kind === "ok") {
-          setState("done")
           setItems(result.data)
-          markLoading(false)
+          setInfo(result.info)
+          setState("done")
         } else {
           setState("error")
           console.tron.log(result.kind)
@@ -142,10 +145,42 @@ export const CalendarStore = types
           console.tron.log(result.kind)
         }
       }),
+
+      prev: flow(function* () {
+        if (self.info?.prev) {
+          setState("pending")
+          const api = new CalendarApi(self.environment.api)
+          const result = yield api.listCalendar(self.info.prev)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
+      
+      next: flow(function* () {
+        if (self.info?.next) {
+          setState("pending")
+          const api = new CalendarApi(self.environment.api)
+          const result = yield api.listCalendar(self.info.next)
+          if (result.kind === "ok") {
+            setItems(result.data)
+            setInfo(result.info)
+            setState("done")
+          } else {
+            setState("error")
+            console.tron.log(result.kind)
+          }
+        }
+      }),
     }
   })
 
 export interface ICalendarModelStore extends Instance<typeof CalendarStore> {}
 export interface ICalendarModelStoreSnapshotOut extends SnapshotOut<typeof CalendarStore> {}
 export interface ICalendarModelStoreSnapshotIn extends SnapshotIn<typeof CalendarStore> {}
-export const createCalendarStoreDefaultStore = () => types.optional(CalendarStore, {})
+export const createCalendarStore = () => types.optional(CalendarStore, {})

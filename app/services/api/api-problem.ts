@@ -100,10 +100,10 @@ export function getGeneralApiProblem<T>(
         return { kind: "correct", detail: response.data }
       //  배치 :   3000번대
       case "3":
-        return { kind: "batch", detail: response.data, temporary: true  }
+        return { kind: "batch", detail: response.data, temporary: true }
       //  서비스 : 5000번대
       case "5":
-        return { kind: "service", detail: response.data, temporary: true  }
+        return { kind: "service", detail: response.data, temporary: true }
       // NOTE API 구현하면서 추가 가능 ...
     }
   }

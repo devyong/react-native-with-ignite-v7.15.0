@@ -11,7 +11,7 @@ import {
   TPatchResult,
   TPostResult,
   TPutResult,
-  TSaveOkResult
+  TSaveOkResult,
 } from "./api-types"
 
 /**
@@ -71,8 +71,8 @@ export class ApiBase {
    * @param url 조회 URL
    * @returns
    */
-  async list<T>(url: string): Promise<TListResult<T>> {
-    const response: ApiResponse<TApiResponse<T>> = await this.api.apisauce.get(url)
+  async list<T>(url: string, params?: { [key: string]: any }): Promise<TListResult<T>> {
+    const response: ApiResponse<TApiResponse<T>> = await this.api.apisauce.get(url, params)
 
     const problem = getGeneralApiProblem(response)
     if (problem) return problem
@@ -93,7 +93,7 @@ export class ApiBase {
     if (problem) return problem
 
     const result = response.data as TApiOkResponse<T>
-    return { kind: "ok", data: result.results } as TGetOkResult<T>
+    return { kind: "ok", data: result } as TGetOkResult<T>
   }
 
   /**
@@ -109,7 +109,7 @@ export class ApiBase {
     if (problem) return problem
 
     const result = response.data as TApiOkResponse<T>
-    return { kind: "ok", data: result.results } as TSaveOkResult<T>
+    return { kind: "ok", data: result } as TSaveOkResult<T>
   }
 
   /**
@@ -126,7 +126,7 @@ export class ApiBase {
     if (problem) return problem
 
     const result = response.data as TApiOkResponse<T>
-    return { kind: "ok", data: result.results } as TSaveOkResult<T>
+    return { kind: "ok", data: result } as TSaveOkResult<T>
   }
 
   /**
@@ -143,7 +143,7 @@ export class ApiBase {
     if (problem) return problem
 
     const result = response.data as TApiOkResponse<T>
-    return { kind: "ok", data: result.results } as TSaveOkResult<T>
+    return { kind: "ok", data: result } as TSaveOkResult<T>
   }
 
   /**

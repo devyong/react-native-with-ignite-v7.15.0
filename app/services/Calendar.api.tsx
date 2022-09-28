@@ -3,8 +3,11 @@ import { ApiBase } from "./api/api-base"
 import { ICalendarModel } from "../models/Calendar.model"
 
 export class CalendarApi extends ApiBase {
-  async listCalendar() {
-    return this.list<ICalendarModel>("calendar")
+  async listCalendar(params?: string | { [key: string]: any }) {
+    if (typeof params === "string") {
+      return this.list<ICalendarModel>(params)
+    }
+    return this.list<ICalendarModel>("calendar", params)
   }
 
   async getCalendar(id: number) {
