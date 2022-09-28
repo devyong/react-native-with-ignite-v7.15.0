@@ -79,8 +79,18 @@ export const LocationScreen: FC<StackScreenProps<NavigatorParamList, "location">
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Button text="Prev" disabled={locationStore.info.prev === null} onPress={locationStore.prev} />
-          <Button text="Next" disabled={locationStore.info.next === null} onPress={locationStore.next} />
+          <View style={LIST_CONTAINER}>
+            <Button
+              text="Prev"
+              disabled={locationStore.info?.prev === null}
+              onPress={locationStore.prev}
+            />
+            <Button
+              text="Next"
+              disabled={locationStore.info?.next === null}
+              onPress={locationStore.next}
+            />
+          </View>
           {locationStore.state === "error" && <Text>Error...</Text>}
           {locationStore.state === "pending" && <Text>Loading...</Text>}
           {locationStore.state === "done" && (
