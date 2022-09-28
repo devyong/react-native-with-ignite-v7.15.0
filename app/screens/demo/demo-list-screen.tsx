@@ -98,12 +98,12 @@ export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">
           <View style={LIST_CONTAINER}>
             <Button
               text="Prev"
-              disabled={characterStore.info.prev === null}
+              disabled={characterStore.info?.prev === null}
               onPress={characterStore.prev}
             />
             <Button
               text="Next"
-              disabled={characterStore.info.next === null}
+              disabled={characterStore.info?.next === null}
               onPress={characterStore.next}
             />
           </View>

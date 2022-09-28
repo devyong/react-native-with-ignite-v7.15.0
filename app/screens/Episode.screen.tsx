@@ -75,7 +75,7 @@ export const EpisodeScreen: FC<StackScreenProps<NavigatorParamList, "episode">> 
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <View>
+           <View style={LIST_CONTAINER}>
             <Button
               text="Prev"
               disabled={episodeStore.info?.prev === null}
