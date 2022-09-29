@@ -13,6 +13,10 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { EpisodeScreen } from "../screens/Episode.screen"
 import { LocationScreen } from "../screens/Location.screen"
 import { CharacterDetailScreen } from "../screens/CharacterDetail.screen"
+import { AccountNavigator } from "./Account.navigator"
+import { LoginNavigator } from "./Login.navigator"
+import { SymptomNavigator } from "./Symptom.navigator"
+import { PrescriptionNavigator } from "./Prescription.navigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -28,6 +32,12 @@ import { CharacterDetailScreen } from "../screens/CharacterDetail.screen"
  */
 export type NavigatorParamList = {
   welcome: undefined
+  accountNav: undefined
+  loginNav: undefined
+
+  symptomNav: undefined
+  prescriptionNav: undefined
+
   demo: undefined
   demoList: undefined
   location: undefined
@@ -45,12 +55,29 @@ const Stack = createNativeStackNavigator<NavigatorParamList>()
 const AppStack = () => {
   return (
     <Stack.Navigator
+      initialRouteName="welcome"
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="welcome"
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
+      <Stack.Screen
+        name="accountNav"
+        component={AccountNavigator}
+        options={{
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="loginNav"
+        component={LoginNavigator}
+        options={{
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen name="symptomNav" component={SymptomNavigator} />
+      <Stack.Screen name="prescriptionNav" component={PrescriptionNavigator} />
+
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
       {/** 🔥 Your screens go here */}

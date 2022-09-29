@@ -89,6 +89,10 @@ const FOOTER_CONTENT: ViewStyle = {
 export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
   ({ navigation }) => {
     const nextScreen = () => navigation.navigate("demo")
+    const accountScreen = () => navigation.navigate("accountNav")
+    const loginScreen = () => navigation.navigate("loginNav")
+    const symptomScreen = () => navigation.navigate("symptomNav")
+    const prescriptionScreen = () => navigation.navigate("prescriptionNav")
 
     return (
       <View testID="WelcomeScreen" style={FULL}>
@@ -113,6 +117,34 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
+            <Button
+              testID="next-screen-button"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              tx="welcomeScreen.symptom"
+              onPress={symptomScreen}
+            />
+            <Button
+              testID="next-screen-button"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              tx="welcomeScreen.prescription"
+              onPress={prescriptionScreen}
+            />
+            <Button
+              testID="next-screen-button"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              tx="welcomeScreen.account"
+              onPress={accountScreen}
+            />
+            <Button
+              testID="next-screen-button"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              tx="welcomeScreen.login"
+              onPress={loginScreen}
+            />
             <Button
               testID="next-screen-button"
               style={CONTINUE}

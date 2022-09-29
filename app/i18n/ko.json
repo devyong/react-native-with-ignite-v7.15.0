@@ -10,6 +10,10 @@
   "welcomeScreen": {
     "poweredBy": "IGNITE 제공",
     "readyForLaunch": "시작 준비 완료",
+    "account": "계정",
+    "login": "로그인",
+    "symptom": "증상",
+    "prescription": "처방전",
     "continue": "계속"
   },
   "demoScreen": {
@@ -28,6 +32,10 @@
     "webReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 앱을 다시 로드합니다.",
     "windowsReactotronHint": "이 방법이 작동하지 않으면 Reactotron 데스크톱 앱이 실행 중인지 확인하고 앱을 다시 로드합니다."
   },
+  "accountScreen": { "title": "계정" },
+  "loginScreen": { "title": "로그인" },
+  "symptomScreen": { "title": "증상" },
+  "prescriptionScreen": { "title": "처방전" },
   "demoListScreen": {
     "title": "캐릭터 목록"
   },
