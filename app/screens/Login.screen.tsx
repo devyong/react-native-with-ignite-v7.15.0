@@ -41,12 +41,11 @@ const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-
 export const LoginScreen: FC<StackScreenProps<LoginNavigatorParamList, "login">> = observer(
   function LoginScreen({ navigation }) {
     // Pull in one of our MST stores
     // const { loginStore } = useStores()
-    
+
     // const fetchData = useCallback(async () => {
     //   await loginStore.listLogin()
     // }, [])

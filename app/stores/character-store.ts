@@ -78,7 +78,7 @@ export const CharacterStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       prev: flow(function* () {
         if (self.info?.prev) {
           setState("pending")

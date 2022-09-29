@@ -41,49 +41,47 @@ const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
+export const PrescriptionScreen: FC<
+  StackScreenProps<PrescriptionNavigatorParamList, "prescription">
+> = observer(function PrescriptionScreen({ navigation }) {
+  // Pull in one of our MST stores
+  // const { prescriptionStore } = useStores()
 
+  // const fetchData = useCallback(async () => {
+  //   await prescriptionStore.listPrescription()
+  // }, [])
 
-export const PrescriptionScreen: FC<StackScreenProps<PrescriptionNavigatorParamList, "prescription">> = observer(
-  function PrescriptionScreen({ navigation }) {
-    // Pull in one of our MST stores
-    // const { prescriptionStore } = useStores()
-    
-    // const fetchData = useCallback(async () => {
-    //   await prescriptionStore.listPrescription()
-    // }, [])
+  // const renderItem = useCallback(
+  //   ({ item }) => (
+  //     <View style={LIST_CONTAINER}>
+  //       <Text style={LIST_TEXT}>{item.name}</Text>
+  //     </View>
+  //   ),
+  //   [],
+  // )
 
-    // const renderItem = useCallback(
-    //   ({ item }) => (
-    //     <View style={LIST_CONTAINER}>
-    //       <Text style={LIST_TEXT}>{item.name}</Text>
-    //     </View>
-    //   ),
-    //   [],
-    // )
+  // useEffect(() => {
+  //   fetchData()
+  // }, [fetchData])
 
-    // useEffect(() => {
-    //   fetchData()
-    // }, [fetchData])
-
-    return (
-      <View testID="PrescriptionScreen" style={FULL}>
-        <GradientBackground colors={["#422443", "#281b34"]} />
-        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-          <Header
-            headerTx="prescriptionScreen.title"
-            leftIcon="back"
-            onLeftPress={navigation.goBack}
-            style={HEADER}
-            titleStyle={HEADER_TITLE}
-          />
-          {/* <FlatList
+  return (
+    <View testID="PrescriptionScreen" style={FULL}>
+      <GradientBackground colors={["#422443", "#281b34"]} />
+      <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+        <Header
+          headerTx="prescriptionScreen.title"
+          leftIcon="back"
+          onLeftPress={navigation.goBack}
+          style={HEADER}
+          titleStyle={HEADER_TITLE}
+        />
+        {/* <FlatList
             contentContainerStyle={FLAT_LIST}
             data={[...prescriptionStore.items]}
             keyExtractor={(item) => String(item.id)}
             renderItem={renderItem}
           /> */}
-        </Screen>
-      </View>
-    )
-  },
-)
+      </Screen>
+    </View>
+  )
+})

@@ -1,21 +1,14 @@
-import * as React from 'react';
-import {
-  ScrollView,
-  ScrollViewProps,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { useTheme } from 'react-native-paper';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as React from "react"
+import { ScrollView, ScrollViewProps, StyleProp, StyleSheet, View, ViewStyle } from "react-native"
+import { useTheme } from "react-native-paper"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 type Props = ScrollViewProps & {
-  children: React.ReactNode;
-  withScrollView?: boolean;
-  style?: StyleProp<ViewStyle>;
-  contentContainerStyle?: StyleProp<ViewStyle>;
-};
+  children: React.ReactNode
+  withScrollView?: boolean
+  style?: StyleProp<ViewStyle>
+  contentContainerStyle?: StyleProp<ViewStyle>
+}
 
 export default function ScreenWrapper({
   children,
@@ -26,9 +19,9 @@ export default function ScreenWrapper({
 }: Props) {
   const {
     colors: { background },
-  } = useTheme();
+  } = useTheme()
 
-  const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets()
 
   const containerStyle = [
     styles.container,
@@ -38,7 +31,7 @@ export default function ScreenWrapper({
       paddingLeft: insets.left,
       paddingRight: insets.left,
     },
-  ];
+  ]
 
   return (
     <>
@@ -56,11 +49,11 @@ export default function ScreenWrapper({
         <View style={[containerStyle, style]}>{children}</View>
       )}
     </>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-});
+})

@@ -1,2 +1,2 @@
-export * from './error-boundary';
-export * from './error-component';
+export * from "./error-boundary"
+export * from "./error-component"

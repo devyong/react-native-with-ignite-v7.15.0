@@ -45,7 +45,7 @@ export const AccountScreen: FC<StackScreenProps<AccountNavigatorParamList, "acco
   function AccountScreen({ navigation }) {
     // Pull in one of our MST stores
     // const { accountStore } = useStores()
-    
+
     // const fetchData = useCallback(async () => {
     //   await accountStore.listAccount()
     // }, [])

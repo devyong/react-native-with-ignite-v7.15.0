@@ -90,12 +90,12 @@ export const CalendarScreen: FC<StackScreenProps<NavigatorParamList, "calendar">
           {calendarStore.state === "error" && <Text>Error...</Text>}
           {calendarStore.state === "pending" && <Text>Loading...</Text>}
           {calendarStore.state === "done" && (
-          <FlatList
-            contentContainerStyle={FLAT_LIST}
-            data={[...calendarStore.items]}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={renderItem}
-          />
+            <FlatList
+              contentContainerStyle={FLAT_LIST}
+              data={[...calendarStore.items]}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={renderItem}
+            />
           )}
         </Screen>
       </View>

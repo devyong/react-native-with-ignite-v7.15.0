@@ -1,2 +1,2 @@
-export * from './demo-list-screen';
-export * from './demo-screen';
+export * from "./demo-list-screen"
+export * from "./demo-screen"

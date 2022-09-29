@@ -2,12 +2,7 @@ import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-st
 
 import { withEnvironment } from "./extensions"
 
-import { 
-  ILocationModel, 
-  LocationModel,
-  IPaginationModel, 
-  PaginationModel 
-} from "../models"
+import { ILocationModel, LocationModel, IPaginationModel, PaginationModel } from "../models"
 
 import { LocationApi } from "../services"
 
@@ -26,7 +21,7 @@ export const LocationStore = types
   .views((self) => ({
     findById: function (id) {
       return self.items.find((item) => item.id === id)
-    }
+    },
   }))
   .actions((self) => {
     function setItems(items: ILocationModel[]) {
@@ -67,7 +62,7 @@ export const LocationStore = types
     return {
       select: setCurrent,
 
-      listLocation: flow(function* (params?:{[key:string]:any}) {
+      listLocation: flow(function* (params?: { [key: string]: any }) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
         const result = yield api.listLocation(params)
@@ -93,7 +88,7 @@ export const LocationStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       postLocation: flow(function* (data: ILocationModel) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
@@ -106,7 +101,7 @@ export const LocationStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       putLocation: flow(function* (id: number, data: ILocationModel) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
@@ -119,7 +114,7 @@ export const LocationStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       patchLocation: flow(function* (id: number, data: ILocationModel) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
@@ -132,7 +127,7 @@ export const LocationStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       deleteLocation: flow(function* (id: number) {
         setState("pending")
         const api = new LocationApi(self.environment.api)
@@ -161,7 +156,7 @@ export const LocationStore = types
           }
         }
       }),
-      
+
       next: flow(function* () {
         if (self.info?.next) {
           setState("pending")

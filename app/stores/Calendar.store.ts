@@ -2,12 +2,7 @@ import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-st
 
 import { withEnvironment } from "./extensions"
 
-import { 
-  ICalendarModel, 
-  CalendarModel,
-  IPaginationModel, 
-  PaginationModel 
-} from "../models"
+import { ICalendarModel, CalendarModel, IPaginationModel, PaginationModel } from "../models"
 
 import { CalendarApi } from "../services"
 
@@ -26,7 +21,7 @@ export const CalendarStore = types
   .views((self) => ({
     findById: function (id) {
       return self.items.find((item) => item.id === id)
-    }
+    },
   }))
   .actions((self) => {
     function setItems(items: ICalendarModel[]) {
@@ -67,7 +62,7 @@ export const CalendarStore = types
     return {
       select: setCurrent,
 
-      listCalendar: flow(function* (params?:{[key:string]:any}) {
+      listCalendar: flow(function* (params?: { [key: string]: any }) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
         const result = yield api.listCalendar(params)
@@ -93,7 +88,7 @@ export const CalendarStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       postCalendar: flow(function* (data: ICalendarModel) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
@@ -106,7 +101,7 @@ export const CalendarStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       putCalendar: flow(function* (id: number, data: ICalendarModel) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
@@ -119,7 +114,7 @@ export const CalendarStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       patchCalendar: flow(function* (id: number, data: ICalendarModel) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
@@ -132,7 +127,7 @@ export const CalendarStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       deleteCalendar: flow(function* (id: number) {
         setState("pending")
         const api = new CalendarApi(self.environment.api)
@@ -161,7 +156,7 @@ export const CalendarStore = types
           }
         }
       }),
-      
+
       next: flow(function* () {
         if (self.info?.next) {
           setState("pending")

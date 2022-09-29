@@ -9,7 +9,7 @@ storiesOf("ScreenWraper", module)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="Primary" usage="The primary.">
-        <ScreenWrapper style={{ backgroundColor: color.error }} >
+        <ScreenWrapper style={{ backgroundColor: color.error }}>
           {/* Add your component inside */}
         </ScreenWrapper>
       </UseCase>

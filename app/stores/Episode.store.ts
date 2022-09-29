@@ -2,12 +2,7 @@ import { destroy, flow, Instance, SnapshotIn, SnapshotOut, types } from "mobx-st
 
 import { withEnvironment } from "./extensions"
 
-import { 
-  IEpisodeModel, 
-  EpisodeModel,
-  IPaginationModel, 
-  PaginationModel 
-} from "../models"
+import { IEpisodeModel, EpisodeModel, IPaginationModel, PaginationModel } from "../models"
 
 import { EpisodeApi } from "../services"
 
@@ -26,7 +21,7 @@ export const EpisodeStore = types
   .views((self) => ({
     findById: function (id) {
       return self.items.find((item) => item.id === id)
-    }
+    },
   }))
   .actions((self) => {
     function setItems(items: IEpisodeModel[]) {
@@ -67,7 +62,7 @@ export const EpisodeStore = types
     return {
       select: setCurrent,
 
-      listEpisode: flow(function* (params?:{[key:string]:any}) {
+      listEpisode: flow(function* (params?: { [key: string]: any }) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
         const result = yield api.listEpisode(params)
@@ -93,7 +88,7 @@ export const EpisodeStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       postEpisode: flow(function* (data: IEpisodeModel) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
@@ -106,7 +101,7 @@ export const EpisodeStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       putEpisode: flow(function* (id: number, data: IEpisodeModel) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
@@ -119,7 +114,7 @@ export const EpisodeStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       patchEpisode: flow(function* (id: number, data: IEpisodeModel) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
@@ -132,7 +127,7 @@ export const EpisodeStore = types
           console.tron.log(result.kind)
         }
       }),
-      
+
       deleteEpisode: flow(function* (id: number) {
         setState("pending")
         const api = new EpisodeApi(self.environment.api)
@@ -161,7 +156,7 @@ export const EpisodeStore = types
           }
         }
       }),
-      
+
       next: flow(function* () {
         if (self.info?.next) {
           setState("pending")

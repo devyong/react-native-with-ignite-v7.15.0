@@ -45,7 +45,7 @@ export const SymptomScreen: FC<StackScreenProps<SymptomNavigatorParamList, "symp
   function SymptomScreen({ navigation }) {
     // Pull in one of our MST stores
     // const { symptomStore } = useStores()
-    
+
     // const fetchData = useCallback(async () => {
     //   await symptomStore.listSymptom()
     // }, [])
@@ -74,7 +74,6 @@ export const SymptomScreen: FC<StackScreenProps<SymptomNavigatorParamList, "symp
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-
         </Screen>
       </View>
     )
