@@ -76,7 +76,7 @@ const AppStack = () => {
                     onPress={() => (navigation as any as DrawerNavigationProp<{}>).openDrawer()}
                   />
                 ) : null}
-                <Appbar.Content title={title} subtitle="subtitle"/>
+                <Appbar.Content title={title} subtitle="subtitle" />
                 <Appbar.Action icon="magnify" onPress={() => console.tron.log("click magnify")} />
                 <Appbar.Action icon={MORE_ICON} onPress={() => console.tron.log("click more")} />
               </Appbar.Header>
@@ -106,29 +106,46 @@ const AppStack = () => {
           headerShown: true,
         }}
       />
-      
+
       <Stack.Screen
-        name="symptomNav" 
+        name="symptomNav"
         component={SymptomNavigator}
         options={{
-          headerShown: false,
+          headerShown: true,
         }}
       />
-      
+      <Stack.Screen
+        name="prescriptionNav"
+        component={PrescriptionNavigator}
+        options={{
+          headerShown: true,
+        }}
+      />
+
       {/** 🔥 Your screens go here */}
 
-      <Stack.Screen name="prescriptionNav" component={PrescriptionNavigator} />
-
-      <Stack.Screen name="calendar" component={CalendarScreen}  options={{ headerShown: true }}/>
+      <Stack.Screen name="calendar" component={CalendarScreen} options={{ headerShown: true }} />
 
       <Stack.Screen name="demo" component={DemoScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="demoList" component={DemoListScreen}  options={{ headerShown: false }}/>
-      <Stack.Screen name="location" component={LocationScreen}  options={{ headerShown: false }}/>
-      <Stack.Screen name="episode" component={EpisodeScreen}  options={{ headerShown: false }}/>
-      <Stack.Screen name="characterDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="demoList" component={DemoListScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="episode" component={EpisodeScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="characterDetail"
+        component={CharacterDetailScreen}
+        options={{ headerShown: false }}
+      />
 
-      <Stack.Screen name="episodeDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
-      <Stack.Screen name="locationDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen
+        name="episodeDetail"
+        component={CharacterDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="locationDetail"
+        component={CharacterDetailScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   )
 }

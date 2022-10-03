@@ -29,6 +29,7 @@ import { useKeepAwake } from "expo-keep-awake"
 import { I18nManager } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import DrawerItems from "./components/DrawerItems"
+import { AuthenticationProvider } from "./context/Auth.provider"
 
 // Add new typescript properties to the theme
 declare global {
@@ -209,18 +210,20 @@ function App() {
   return (
     <ToggleStorybook>
       <RootStoreProvider value={rootStore}>
-        <PaperProvider theme={theme}>
-          <SafeAreaProvider >
-            <PreferencesContext.Provider value={preferences}>
-              <ErrorBoundary catchErrors={"always"}>
-                <AppNavigator
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
-              </ErrorBoundary>
-            </PreferencesContext.Provider>
-          </SafeAreaProvider>
-        </PaperProvider>
+        <AuthenticationProvider>
+          <PaperProvider theme={theme}>
+            <SafeAreaProvider>
+              <PreferencesContext.Provider value={preferences}>
+                <ErrorBoundary catchErrors={"always"}>
+                  <AppNavigator
+                    initialState={initialNavigationState}
+                    onStateChange={onNavigationStateChange}
+                  />
+                </ErrorBoundary>
+              </PreferencesContext.Provider>
+            </SafeAreaProvider>
+          </PaperProvider>
+        </AuthenticationProvider>
       </RootStoreProvider>
     </ToggleStorybook>
   )
