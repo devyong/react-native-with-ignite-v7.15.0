@@ -7,9 +7,10 @@
 // side effect of breaking other tooling like mobile-center and react-native-rename.
 //
 // It's easier just to leave it here.
-import App from "./app/app.tsx"
+import 'react-native-gesture-handler'
 import { AppRegistry } from "react-native"
-import {name as appName} from "./app.json"
+import App from "./app/app.tsx"
+import { name as appName } from "./app.json"
 
 AppRegistry.registerComponent(appName, () => App)
 export default App

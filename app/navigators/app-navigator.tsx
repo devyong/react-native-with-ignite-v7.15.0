@@ -5,7 +5,7 @@
  * and a "main" flow which the user will use once logged in.
  */
 import React from "react"
-import { useColorScheme } from "react-native"
+import { useColorScheme, Platform } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { WelcomeScreen, DemoScreen, DemoListScreen, CalendarScreen } from "../screens"
@@ -17,6 +17,11 @@ import { AccountNavigator } from "./Account.navigator"
 import { LoginNavigator } from "./Login.navigator"
 import { SymptomNavigator } from "./Symptom.navigator"
 import { PrescriptionNavigator } from "./Prescription.navigator"
+
+import { getHeaderTitle } from "@react-navigation/elements"
+import { Appbar } from "react-native-paper"
+import type { DrawerNavigationProp } from "@react-navigation/drawer"
+const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -56,11 +61,37 @@ const AppStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="welcome"
-      screenOptions={{
-        headerShown: false,
+      screenOptions={({ navigation }) => {
+        return {
+          detachPreviousScreen: !navigation.isFocused(),
+          header: ({ navigation, route, options, back }) => {
+            const title = getHeaderTitle(options, route.name)
+            return (
+              <Appbar.Header>
+                {back ? (
+                  <Appbar.BackAction onPress={() => navigation.goBack()} />
+                ) : (navigation as any).openDrawer ? (
+                  <Appbar.Action
+                    icon="menu"
+                    onPress={() => (navigation as any as DrawerNavigationProp<{}>).openDrawer()}
+                  />
+                ) : null}
+                <Appbar.Content title={title} subtitle="subtitle"/>
+                <Appbar.Action icon="magnify" onPress={() => console.tron.log("click magnify")} />
+                <Appbar.Action icon={MORE_ICON} onPress={() => console.tron.log("click more")} />
+              </Appbar.Header>
+            )
+          },
+        }
       }}
     >
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
+      <Stack.Screen
+        name="welcome"
+        component={WelcomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="accountNav"
         component={AccountNavigator}
@@ -75,19 +106,29 @@ const AppStack = () => {
           headerShown: true,
         }}
       />
-      <Stack.Screen name="symptomNav" component={SymptomNavigator} />
+      
+      <Stack.Screen
+        name="symptomNav" 
+        component={SymptomNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      
+      {/** 🔥 Your screens go here */}
+
       <Stack.Screen name="prescriptionNav" component={PrescriptionNavigator} />
 
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
-      {/** 🔥 Your screens go here */}
-      <Stack.Screen name="location" component={LocationScreen} />
-      <Stack.Screen name="episode" component={EpisodeScreen} />
-      <Stack.Screen name="calendar" component={CalendarScreen} />
-      <Stack.Screen name="characterDetail" component={CharacterDetailScreen} />
+      <Stack.Screen name="calendar" component={CalendarScreen}  options={{ headerShown: true }}/>
 
-      <Stack.Screen name="episodeDetail" component={CharacterDetailScreen} />
-      <Stack.Screen name="locationDetail" component={CharacterDetailScreen} />
+      <Stack.Screen name="demo" component={DemoScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="demoList" component={DemoListScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="location" component={LocationScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="episode" component={EpisodeScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="characterDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
+
+      <Stack.Screen name="episodeDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="locationDetail" component={CharacterDetailScreen}  options={{ headerShown: false }}/>
     </Stack.Navigator>
   )
 }

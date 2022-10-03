@@ -47,9 +47,7 @@ export const LocationScreen: FC<StackScreenProps<NavigatorParamList, "location">
     // Pull in one of our MST stores
     const { locationStore } = useStores()
 
-    const [page, setPage] = React.useState(1)
-
-    const fetchData = useCallback(async (page = 1) => {
+    const fetchData = useCallback(async (page = 2) => {
       await locationStore.listLocation({ page })
     }, [])
 

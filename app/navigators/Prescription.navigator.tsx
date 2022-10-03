@@ -10,7 +10,7 @@ const Stack = createStackNavigator<PrescriptionNavigatorParamList>()
 export const PrescriptionNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false }}
+      screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: true }}
     >
       <Stack.Screen name="prescription" component={PrescriptionScreen} />
     </Stack.Navigator>

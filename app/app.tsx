@@ -210,7 +210,7 @@ function App() {
     <ToggleStorybook>
       <RootStoreProvider value={rootStore}>
         <PaperProvider theme={theme}>
-          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <SafeAreaProvider >
             <PreferencesContext.Provider value={preferences}>
               <ErrorBoundary catchErrors={"always"}>
                 <AppNavigator

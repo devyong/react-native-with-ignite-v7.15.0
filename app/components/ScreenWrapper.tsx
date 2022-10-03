@@ -39,8 +39,13 @@ export default function ScreenWrapper({
         <ScrollView
           {...rest}
           contentContainerStyle={contentContainerStyle}
+          // 페이지의 내용이 짧으면 바운스를 허용하지 않는다.
           alwaysBounceVertical={false}
-          showsVerticalScrollIndicator={false}
+          
+          // 스크롤바를 표시하지 않는다. 
+          // 스크롤기능은 동작한다.
+          // showsVerticalScrollIndicator={false}
+          
           style={[containerStyle, style]}
         >
           {children}

@@ -2,61 +2,39 @@ import React, { FC, useCallback, useEffect } from "react"
 import { View, Platform, StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Appbar, FAB, Switch, Paragraph, useTheme } from "react-native-paper"
+import { Paragraph, useTheme } from "react-native-paper"
 import ScreenWrapper from "../components/ScreenWrapper"
 
 import { useStores } from "../stores"
 
 import { transparent, yellowA200 } from "../theme/colors"
 
-import { SymptomNavigatorParamList } from "../navigators/Symptom.navigator"
+import { NavigatorParamList } from "../navigators/app-navigator"
 
 // STOP! READ ME FIRST!
 // To fix the TS error below, you'll need to add the following things in your navigation config:
-// - Add `calendar: undefined` to NavigatorParamList
+// - Add `splash: undefined` to NavigatorParamList
 // - Import your screen, and add it to the stack:
-//     `<Stack.Screen name="calendar" component={CalendarScreen} />`
+//     `<Stack.Screen name="splash" component={SplashScreen} />`
 // Hint: Look for the 🔥!
 
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
-export const CalendarScreen: FC<StackScreenProps<CalendarNavigatorParamList, "calendar">> = observer(
-  function CalendarScreen({ navigation, route }) {
+export const SplashScreen: FC<StackScreenProps<NavigatorParamList, "splash">> = observer(
+  function SplashScreen({ navigation, route }) {
     
     const theme = useTheme()
-
-    // Pull in one of our MST stores
-    // const { calendarStore } = useStores()
-    //
-    // const fetchData = useCallback(async () => {
-    //   await calendarStore.listCalendar()
-    // }, [])
-    //
-    // const renderItem = useCallback(
-    //   ({ item }) => (
-    //     <View style={styles.container}>
-    //       <Text style={styles.listText}>{item.name}</Text>
-    //     </View>
-    //   ),
-    //   [],
-    // )
-    //
-    // useEffect(() => {
-    //   fetchData()
-    // }, [fetchData])
-
-    const [showLeftIcon, setShowLeftIcon] = React.useState(true)
+    const stores = useStores()
 
     return (
-      <View testID="CalendarScreen" style={styles.fullscreen}>
+      <View testID="SplashScreen" style={styles.fullscreen}>
         <ScreenWrapper 
           style={styles.container} 
           contentContainerStyle={styles.contentContainer}
           withScrollView={true}
         >
           <View style={styles.row}>
-            <Paragraph>CalendarScreen</Paragraph>
-            <Switch value={showLeftIcon} onValueChange={() => setShowLeftIcon(!showLeftIcon)} />
+            <Paragraph>SplashScreen</Paragraph>
           </View>
         </ScreenWrapper>
       </View>
