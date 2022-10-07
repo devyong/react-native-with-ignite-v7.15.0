@@ -1,17 +1,14 @@
-import React, { FC } from "react"
-import { View, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
+import React, { FC } from "react"
+import { ImageStyle, SafeAreaView, TextStyle, View, ViewStyle } from "react-native"
 import {
-  Button,
-  Header,
+  AutoImage as Image, Button, GradientBackground, Header,
   Screen,
-  Text,
-  GradientBackground,
-  AutoImage as Image,
+  Text
 } from "../../components"
+import { WelcomeNavigatorParamList } from "../../navigators/Welcome.navigator"
 import { color, spacing, typography } from "../../theme"
-import { NavigatorParamList } from "../../navigators"
 
 const bowserLogo = require("./bowser.png")
 
@@ -86,13 +83,11 @@ const FOOTER_CONTENT: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
 
-export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
+export const WelcomeScreen: FC<StackScreenProps<WelcomeNavigatorParamList, "welcome">> = observer(
   ({ navigation }) => {
     const nextScreen = () => navigation.navigate("demo")
-    const accountScreen = () => navigation.navigate("accountNav")
-    const loginScreen = () => navigation.navigate("loginNav")
-    const symptomScreen = () => navigation.navigate("symptomNav")
-    const prescriptionScreen = () => navigation.navigate("prescriptionNav")
+    const accountScreen = () => navigation.navigate("signup")
+    const loginScreen = () => navigation.navigate("signin")
 
     return (
       <View testID="WelcomeScreen" style={FULL}>
@@ -117,20 +112,6 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
-            <Button
-              testID="next-screen-button"
-              style={CONTINUE}
-              textStyle={CONTINUE_TEXT}
-              tx="welcomeScreen.symptom"
-              onPress={symptomScreen}
-            />
-            <Button
-              testID="next-screen-button"
-              style={CONTINUE}
-              textStyle={CONTINUE_TEXT}
-              tx="welcomeScreen.prescription"
-              onPress={prescriptionScreen}
-            />
             <Button
               testID="next-screen-button"
               style={CONTINUE}

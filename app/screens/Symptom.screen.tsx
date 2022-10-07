@@ -2,18 +2,20 @@ import React, { FC } from "react"
 import { View, Platform, StyleSheet } from "react-native"
 import { observer } from "mobx-react-lite"
 import { StackScreenProps } from "@react-navigation/stack"
-import { Appbar, FAB, Switch, Paragraph, useTheme } from "react-native-paper"
+import { Appbar, FAB, Switch, Paragraph, useTheme, Button } from "react-native-paper"
 import ScreenWrapper from "../components/ScreenWrapper"
+import { useAuth } from "../context/Auth.context"
 
 import { SymptomNavigatorParamList } from "../navigators/Symptom.navigator"
 
 import { transparent, yellowA200 } from "../theme/colors"
 
-
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical"
 
 export const SymptomScreen: FC<StackScreenProps<SymptomNavigatorParamList, "symptom">> = observer(
   ({ navigation, route }) => {
+
+    const auth = useAuth();
     // Pull in one of our MST stores
     // const { symptomStore } = useStores()
 
@@ -41,36 +43,38 @@ export const SymptomScreen: FC<StackScreenProps<SymptomNavigatorParamList, "symp
     const [showCustomColor, setShowCustomColor] = React.useState(false)
     const [showExactTheme, setShowExactTheme] = React.useState(false)
 
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        // headerShown: true,
-      //   header: () => (
-      //     <Appbar.Header
-      //       style={showCustomColor ? styles.customColor : null}
-      //       theme={{
-      //         mode: showExactTheme ? "exact" : "adaptive",
-      //       }}
-      //     >
-      //       {showLeftIcon && <Appbar.BackAction onPress={() => navigation.goBack()} />}
-      //       <Appbar.Content title="Title" subtitle={showSubtitle ? "Subtitle" : null} />
-      //       {showSearchIcon && (
-      //         <Appbar.Action icon="magnify" onPress={() => console.tron.log("click magnify")} />
-      //       )}
-      //       {showMoreIcon && (
-      //         <Appbar.Action icon={MORE_ICON} onPress={() => console.tron.log("click more")} />
-      //       )}
-      //     </Appbar.Header>
-      //   ),
-      })
-    }, [
-      navigation,
-      showLeftIcon,
-      showSubtitle,
-      showSearchIcon,
-      showMoreIcon,
-      showCustomColor,
-      showExactTheme,
-    ])
+    // React.useLayoutEffect(() => {
+    //   navigation.setOptions({
+    //     headerShown: true,
+    //     header: () => (
+    //       <Appbar.Header
+    //         style={showCustomColor ? styles.customColor : null}
+    //         theme={{
+    //           mode: showExactTheme ? "exact" : "adaptive",
+    //         }}
+    //       >
+    //         {showLeftIcon && (
+    //           <Appbar.BackAction onPress={() => navigation.canGoBack() && navigation.goBack()} />
+    //         )}
+    //         <Appbar.Content title="Title" subtitle={showSubtitle ? "Subtitle" : null} />
+    //         {showSearchIcon && (
+    //           <Appbar.Action icon="magnify" onPress={() => console.tron.log("click magnify")} />
+    //         )}
+    //         {showMoreIcon && (
+    //           <Appbar.Action icon={MORE_ICON} onPress={() => console.tron.log("click more")} />
+    //         )}
+    //       </Appbar.Header>
+    //     ),
+    //   })
+    // }, [
+    //   navigation,
+    //   showLeftIcon,
+    //   showSubtitle,
+    //   showSearchIcon,
+    //   showMoreIcon,
+    //   showCustomColor,
+    //   showExactTheme,
+    // ])
 
     return (
       <View testID="SymptomScreen" style={styles.fullscreen}>
@@ -104,7 +108,12 @@ export const SymptomScreen: FC<StackScreenProps<SymptomNavigatorParamList, "symp
             <Switch value={showExactTheme} onValueChange={setShowExactTheme} />
           </View>
           <View style={styles.row}>
-            <Paragraph>Dumy row</Paragraph>
+            <Paragraph>Sign out</Paragraph>
+            <Button onPress={() => auth.signout()}>Sign out</Button>
+          </View>
+          <View style={styles.row}>
+            <Paragraph>Refresh Access Token</Paragraph>
+            <Button onPress={() => auth.refresh()}>Refresh Access Token</Button>
           </View>
         </ScreenWrapper>
 

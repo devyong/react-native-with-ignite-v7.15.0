@@ -4,23 +4,24 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import React from "react"
-import { useColorScheme, Platform } from "react-native"
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen, CalendarScreen } from "../screens"
+import React from "react"
+import { Platform, useColorScheme } from "react-native"
+import { CalendarScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
-import { EpisodeScreen } from "../screens/Episode.screen"
-import { LocationScreen } from "../screens/Location.screen"
-import { CharacterDetailScreen } from "../screens/CharacterDetail.screen"
-import { AccountNavigator } from "./Account.navigator"
-import { LoginNavigator } from "./Login.navigator"
-import { SymptomNavigator } from "./Symptom.navigator"
-import { PrescriptionNavigator } from "./Prescription.navigator"
 
+import { SigninScreen } from "../screens/Signin.screen"
+import { SignupScreen } from "../screens/Signup.screen"
+
+import { PrescriptionNavigator } from "./Prescription.navigator"
+import { SymptomNavigator } from "./Symptom.navigator"
+
+import type { DrawerNavigationProp } from "@react-navigation/drawer"
 import { getHeaderTitle } from "@react-navigation/elements"
 import { Appbar } from "react-native-paper"
-import type { DrawerNavigationProp } from "@react-navigation/drawer"
+import { useAuth } from "../context/Auth.context"
+import { WelcomeNavigator } from "./Welcome.navigator"
 const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical"
 
 /**
@@ -36,22 +37,10 @@ const MORE_ICON = Platform.OS === "ios" ? "dots-horizontal" : "dots-vertical"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
-  welcome: undefined
-  accountNav: undefined
-  loginNav: undefined
-
   symptomNav: undefined
   prescriptionNav: undefined
 
-  demo: undefined
-  demoList: undefined
-  location: undefined
-  episode: undefined
   calendar: undefined
-  // 🔥 Your screens go here
-  characterDetail: undefined
-  episodeDetail: undefined
-  locationDetail: undefined
 }
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -60,7 +49,7 @@ const Stack = createNativeStackNavigator<NavigatorParamList>()
 const AppStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="welcome"
+      initialRouteName="symptomNav"
       screenOptions={({ navigation }) => {
         return {
           detachPreviousScreen: !navigation.isFocused(),
@@ -86,65 +75,18 @@ const AppStack = () => {
       }}
     >
       <Stack.Screen
-        name="welcome"
-        component={WelcomeScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="accountNav"
-        component={AccountNavigator}
-        options={{
-          headerShown: true,
-        }}
-      />
-      <Stack.Screen
-        name="loginNav"
-        component={LoginNavigator}
-        options={{
-          headerShown: true,
-        }}
-      />
-
-      <Stack.Screen
         name="symptomNav"
         component={SymptomNavigator}
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="prescriptionNav"
         component={PrescriptionNavigator}
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
-      />
-
-      {/** 🔥 Your screens go here */}
-
-      <Stack.Screen name="calendar" component={CalendarScreen} options={{ headerShown: true }} />
-
-      <Stack.Screen name="demo" component={DemoScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="demoList" component={DemoListScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="location" component={LocationScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="episode" component={EpisodeScreen} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="characterDetail"
-        component={CharacterDetailScreen}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen
-        name="episodeDetail"
-        component={CharacterDetailScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="locationDetail"
-        component={CharacterDetailScreen}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )
@@ -153,6 +95,10 @@ const AppStack = () => {
 interface INavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
 export const AppNavigator = (props: INavigationProps) => {
+  
+  const { isSignin } = useAuth()
+  console.tron.logImportant("IS SIGNIN?", isSignin)
+
   const colorScheme = useColorScheme()
   useBackButtonHandler(canExit)
   return (
@@ -161,7 +107,15 @@ export const AppNavigator = (props: INavigationProps) => {
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      {!isSignin ? (
+        <>
+          <WelcomeNavigator />
+        </>
+      ) : (
+        <>
+          <AppStack />
+        </>
+      )}
     </NavigationContainer>
   )
 }
@@ -177,5 +131,5 @@ AppNavigator.displayName = "AppNavigator"
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["welcome"]
+const exitRoutes = ["welcome", "symptom", "prescription"]
 export const canExit = (routeName: string) => exitRoutes.includes(routeName)

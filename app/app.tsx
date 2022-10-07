@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 import "./i18n"
-import { AppNavigator, useNavigationPersistence } from "./navigators"
+import { AppNavigator, canExit, useBackButtonHandler, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/error/error-boundary"
 import { IRootStore, RootStoreProvider, setupRootStore } from "./stores"
 import { initFonts } from "./theme/fonts" // expo
@@ -29,7 +29,9 @@ import { useKeepAwake } from "expo-keep-awake"
 import { I18nManager } from "react-native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import DrawerItems from "./components/DrawerItems"
-import { AuthenticationProvider } from "./context/Auth.provider"
+import { AuthProvider } from "./context/Auth.provider"
+import { AuthContext } from "./context/Auth.context"
+import { SymptomNavigator } from "./navigators/Symptom.navigator"
 
 // Add new typescript properties to the theme
 declare global {
@@ -135,6 +137,10 @@ function App() {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, PERSISTENCE_KEY)
 
+  useBackButtonHandler((routeName: string) => {
+    return canExit(routeName)
+  })
+
   React.useEffect(() => {
     const restorePrefs = async () => {
       try {
@@ -210,7 +216,7 @@ function App() {
   return (
     <ToggleStorybook>
       <RootStoreProvider value={rootStore}>
-        <AuthenticationProvider>
+        <AuthProvider>
           <PaperProvider theme={theme}>
             <SafeAreaProvider>
               <PreferencesContext.Provider value={preferences}>
@@ -223,7 +229,7 @@ function App() {
               </PreferencesContext.Provider>
             </SafeAreaProvider>
           </PaperProvider>
-        </AuthenticationProvider>
+        </AuthProvider>
       </RootStoreProvider>
     </ToggleStorybook>
   )

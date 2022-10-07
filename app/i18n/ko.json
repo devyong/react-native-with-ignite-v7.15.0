@@ -10,7 +10,7 @@
   "welcomeScreen": {
     "poweredBy": "IGNITE 제공",
     "readyForLaunch": "시작 준비 완료",
-    "account": "계정",
+    "account": "회원가입",
     "login": "로그인",
     "symptom": "증상",
     "prescription": "처방전",
@@ -34,6 +34,7 @@
   },
   "accountScreen": { "title": "계정" },
   "loginScreen": { "title": "로그인" },
+  "signinScreen": { "title": "로그인", "submit": "로그인" },
   "symptomScreen": { "title": "증상" },
   "prescriptionScreen": { "title": "처방전" },
   "demoListScreen": {

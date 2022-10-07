@@ -24,6 +24,10 @@ export class UserApi extends ApiBase {
     return this.delete<IUserModel>(`user/withdraw`)
   }
 
+  async joining(user:IUserModel) {
+    return this.post<IUserModel>(`user`, user)
+  }
+
   async listUser(params?: string | { [key: string]: any }) {
     if (typeof params === "string") {
       return this.list<IUserModel>(params)
@@ -35,16 +39,16 @@ export class UserApi extends ApiBase {
     return this.get<IUserModel>(`user/${id}`)
   }
 
-  async postUser(data: IUserModel) {
-    return this.post<IUserModel>(`user`, data)
+  async postUser(user: IUserModel) {
+    return this.post<IUserModel>(`user`, user)
   }
 
-  async putUser(id: number, data: IUserModel) {
-    return this.put<IUserModel>(`user/${id}`, data)
+  async putUser(id: number, user: IUserModel) {
+    return this.put<IUserModel>(`user/${id}`, user)
   }
 
-  async patchUser(id: number, data: IUserModel) {
-    return this.patch<IUserModel>(`user/${id}`, data)
+  async patchUser(id: number, user: IUserModel) {
+    return this.patch<IUserModel>(`user/${id}`, user)
   }
 
   async deleteUser(id: number) {

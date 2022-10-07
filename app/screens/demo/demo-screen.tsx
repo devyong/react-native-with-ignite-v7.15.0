@@ -1,20 +1,13 @@
-import React, { FC } from "react"
-import { ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
+import React, { FC } from "react"
+import { ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native"
 import {
-  BulletItem,
-  Button,
-  Header,
-  Text,
-  Screen,
-  AutoImage as Image,
-  GradientBackground,
+  AutoImage as Image, BulletItem,
+  Button, GradientBackground, Header, Screen, Text
 } from "../../components"
-import { NavigatorParamList } from "../../navigators"
+import { WelcomeNavigatorParamList } from "../../navigators/Welcome.navigator"
 import { color, spacing } from "../../theme"
-import { Api } from "../../services/api"
-import { save } from "../../utils/storage"
 export const logoIgnite = require("./logo-ignite.png")
 export const heart = require("./heart.png")
 
@@ -93,7 +86,7 @@ const platformCommand = Platform.select({
   android: "Cmd/Ctrl + M",
 })
 
-export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
+export const DemoScreen: FC<StackScreenProps<WelcomeNavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack()
 
@@ -163,7 +156,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
             />
             <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint`} />
           </View>
-          <View>
+          {/* <View>
             <Button
               style={DEMO}
               textStyle={DEMO_TEXT}
@@ -171,7 +164,7 @@ export const DemoScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = obse
               onPress={() => navigation.navigate("calendar")}
             />
             <Text style={HINT} tx={`demoScreen.calendar`} />
-          </View>
+          </View> */}
           <View>
             <Text style={HINT} tx={`demoScreen.rickAndMorty`} />
             <Button
