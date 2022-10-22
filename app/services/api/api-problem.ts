@@ -56,7 +56,7 @@ export type TGeneralApiProblem =
  */
 export function getGeneralApiProblem<T>(
   response: ApiResponse<TApiResponse<T> | null>,
-): TGeneralApiProblem | null {
+): TGeneralApiProblem | void {
   if (!response.ok) {
     switch (response.problem) {
       case "CONNECTION_ERROR":

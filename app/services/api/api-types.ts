@@ -39,5 +39,5 @@ export type TPatchResult<T> = TSaveResult<T>
 /**
  * 삭제 결과
  */
-export type TDeleteOkResult<T> = { kind: "ok" }
-export type TDeleteResult<T> = TDeleteOkResult<T> | TGeneralApiProblem
+export type TDeleteOkResult = { kind: "ok" }
+export type TDeleteResult = TDeleteOkResult | TGeneralApiProblem

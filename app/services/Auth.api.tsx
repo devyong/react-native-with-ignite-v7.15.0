@@ -1,5 +1,4 @@
-import Axios, { AxiosInstance } from "axios"
-import { IAuthParams } from "../context/Auth.context"
+import Axios from "axios"
 import Base64 from "../utils/Base64"
 const {
   AUTH_API_URL,

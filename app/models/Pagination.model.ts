@@ -13,10 +13,10 @@ import {
 export const PaginationModel = types
   .model("Pagination")
   .props({
-    count: types.optional(types.number, 0),
-    pages: types.optional(types.number, 0),
-    next: types.maybeNull(types.string),
-    prev: types.maybeNull(types.string),
+    count: 0,
+    pages: 0,
+    next: "",
+    prev: "",
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({

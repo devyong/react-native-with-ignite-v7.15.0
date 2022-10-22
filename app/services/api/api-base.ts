@@ -151,12 +151,12 @@ export class ApiBase {
    * @param url
    * @returns
    */
-  async delete<T>(url: string): Promise<TDeleteResult<T>> {
+  async delete<T>(url: string): Promise<TDeleteResult> {
     const response: ApiResponse<TApiResponse<T>> = await this.api.apisauce.delete(url)
 
     const problem = getGeneralApiProblem(response)
     if (problem) return problem
 
-    return { kind: "ok" } as TDeleteOkResult<T>
+    return { kind: "ok" } as TDeleteOkResult
   }
 }

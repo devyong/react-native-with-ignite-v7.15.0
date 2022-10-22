@@ -32,9 +32,8 @@ export const SigninScreen: FC<StackScreenProps<NavigatorParamList, "signin">> = 
 
     const signin = () => {
       auth.signin({
-        username: 'alcotest',
-        // password: '4673f3488fff58253aace9a875409dde5ae553b9d886ffc435ef4caacd4f00db',
-        password: 'innerwave33!',
+        username: 'LOGIN_ID',
+        password: 'LOGIN_PASSWORD',
       })
     }
 
